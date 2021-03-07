@@ -20,3 +20,7 @@ const SNotification = styled.div`
 export const Notification = ({ children }) => {
   return children ? <SNotification>{children}</SNotification> : null;
 };
+
+export const FatText = styled.span`
+  font-weight: 600;
+`;

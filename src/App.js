@@ -9,7 +9,6 @@ import { darkTheme, GlobalStyles, lightTheme } from "./styles";
 import SignUp from "./screens/SignUp";
 import routes from "./routes";
 import { HelmetProvider } from "react-helmet-async";
-import { Header } from "./components/Header";
 import Layout from "./components/Layout";
 
 function App() {
@@ -38,7 +37,9 @@ function App() {
               ) : null}
 
               <Route>
-                <NotFound />
+                <Layout>
+                  <NotFound />
+                </Layout>
               </Route>
             </Switch>
           </Router>
