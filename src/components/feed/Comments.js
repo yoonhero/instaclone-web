@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Comment from "./Comment";
+import { useForm } from "react-hook-form";
 
 const CommentsContainer = styled.div`
   margin-top: 20px;
@@ -16,6 +17,8 @@ const CommentCount = styled.span`
 `;
 
 const Comments = ({ author, caption, commentNumber, comments }) => {
+  const { register, handleSubmit } = useForm();
+  const onValid = (data) => {};
   return (
     <CommentsContainer>
       <Comment author={author} payload={caption} />
@@ -29,6 +32,18 @@ const Comments = ({ author, caption, commentNumber, comments }) => {
           payload={comment.payload}
         />
       ))}
+      <div>
+        <form onSubmit={handleSubmit(onValid)}>
+          <input
+            name="payload"
+            ref={register({
+              required: true,
+            })}
+            type="text"
+            placehold="Write a comment"
+          />
+        </form>
+      </div>
     </CommentsContainer>
   );
 };
