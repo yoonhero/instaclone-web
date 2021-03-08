@@ -1,44 +1,43 @@
 import { gql, useQuery } from "@apollo/client";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Photo from "../components/feed/Photo";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 import PageTitle from "../components/PageTitle";
+import { PHOTO_FRAGMENT, COMMENT_FRAGMENT } from "../fragments";
 
 const FEED_QUERY = gql`
   query seeFeed {
     seeFeed {
-      id
+      ...PhotoFragment
       user {
         username
         avatar
       }
-      file
       caption
       likes
       comments {
-        id
-        user {
-          username
-          avatar
-        }
-        payload
-        isMine
-        createdAt
+        ...CommentFragment
       }
-      commentNumber
       createdAt
       isMine
       isLiked
     }
   }
+  ${PHOTO_FRAGMENT}
+  ${COMMENT_FRAGMENT}
 `;
 
 const Home = () => {
-  const { data } = useQuery(FEED_QUERY);
+  const { data, loading } = useQuery(FEED_QUERY);
   return (
     <div>
       <PageTitle title="" />
-      {data?.seeFeed?.map((photo) => (
-        <Photo key={photo.id} {...photo} />
-      ))}
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        data?.seeFeed?.map((photo) => <Photo key={photo.id} {...photo} />)
+      )}
     </div>
   );
 };

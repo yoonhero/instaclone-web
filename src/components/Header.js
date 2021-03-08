@@ -33,6 +33,7 @@ const Column = styled.div`
 `;
 
 const Icon = styled.span`
+  text-decoration: none;
   margin-left: 15px;
 `;
 
@@ -62,17 +63,21 @@ export const Header = () => {
           {isLoggedIn ? (
             <IconsContainer>
               <Icon>
-                <FontAwesomeIcon icon={faHome} size="lg" />
+                <Link to={routes.home}>
+                  <FontAwesomeIcon icon={faHome} size="lg" />
+                </Link>
               </Icon>
               <Icon>
                 <FontAwesomeIcon icon={faCompass} size="lg" />
               </Icon>
               <Icon>
-                {data?.me?.avatar ? (
-                  <Avatar url={data?.me?.avatar} />
-                ) : (
-                  <FontAwesomeIcon icon={faUser} size="lg" />
-                )}
+                <Link to={`/users/${data?.me?.username}`}>
+                  {data?.me?.avatar ? (
+                    <Avatar url={data?.me?.avatar} />
+                  ) : (
+                    <FontAwesomeIcon icon={faUser} size="lg" />
+                  )}
+                </Link>
               </Icon>
             </IconsContainer>
           ) : (
