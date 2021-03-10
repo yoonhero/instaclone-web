@@ -8,6 +8,7 @@ import { faComment, faHeart } from "@fortawesome/free-solid-svg-icons";
 import PageTitle from "../components/PageTitle";
 import Button from "../components/auth/Button";
 import useUser, { ME_QUERY } from "../hooks/useUser";
+import { Link } from "react-router-dom";
 
 const FOLLOW_USER_MUTATION = gql`
   mutation followUser($username: String!) {
@@ -125,9 +126,9 @@ const Icon = styled.div`
 const ProfileBtn = styled(Button).attrs({
   as: "span",
 })`
-  padding: 10px 4px;
+  padding: 8px 4px;
   margin-left: 10px;
-  margin-top: 0px;
+  margin-top: 10px;
   cursor: pointer;
 `;
 
@@ -199,7 +200,11 @@ const Profile = () => {
   const getButton = (seeProfile) => {
     const { isMe, isFollowing } = seeProfile;
     if (isMe) {
-      return <ProfileBtn>Edit Profile</ProfileBtn>;
+      return (
+        <Link to={`/edit/${username}/`}>
+          <ProfileBtn>Edit Profile</ProfileBtn>
+        </Link>
+      );
     }
     if (isFollowing) {
       return <ProfileBtn onClick={unfollowUser}>Unfollow</ProfileBtn>;

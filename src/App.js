@@ -11,6 +11,8 @@ import routes from "./routes";
 import { HelmetProvider } from "react-helmet-async";
 import Layout from "./components/Layout";
 import Profile from "./screens/Profile";
+import EditProfile from "./screens/EditProfile";
+import SearchUsers from "./screens/SearchUsers";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
@@ -39,6 +41,16 @@ function App() {
               <Route path={`/users/:username`}>
                 <Layout>
                   <Profile />
+                </Layout>
+              </Route>
+              <Route path={`/edit/:username/`}>
+                <Layout>
+                  <EditProfile />
+                </Layout>
+              </Route>
+              <Route path={`/search/:keyword/`}>
+                <Layout>
+                  <SearchUsers />
                 </Layout>
               </Route>
               <Route>

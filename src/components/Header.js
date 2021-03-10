@@ -1,12 +1,19 @@
 import { useReactiveVar } from "@apollo/client";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
-import { faCompass, faHome, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCompass,
+  faHome,
+  faSearch,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { isLoggedInVar } from "../apollo";
 import useUser from "../hooks/useUser";
 import routes from "../routes";
+import Input from "./auth/Input";
 import Avatar from "./Avatar";
 
 const SHeader = styled.header`
@@ -50,14 +57,54 @@ const IconsContainer = styled.div`
   align-items: center;
 `;
 
+const SearchInput = styled(Input)`
+  width: 100%;
+`;
+
+const SearchButton = styled(Button)`
+  position: absolute;
+  background: inherit;
+  top: 20px;
+
+  svg {
+    color: rgb(38, 38, 38);
+  }
+`;
+
 export const Header = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
   const { data } = useUser();
+  const history = useHistory();
+
+  const { register, handleSubmit, getValues, setValue } = useForm({
+    mode: "onChange",
+  });
+
+  const onSubmitValid = async () => {
+    const { search } = getValues();
+    setValue("");
+    history.push(`/search/${search}`);
+  };
+
   return (
     <SHeader>
       <Wrapper>
         <Column>
           <FontAwesomeIcon icon={faInstagram} size="2x" />
+        </Column>
+        <Column>
+          <form onSubmit={handleSubmit(onSubmitValid)}>
+            <SearchInput
+              ref={register({})}
+              type="text"
+              name="search"
+              placeholder="검색..."
+            />
+
+            <SearchButton type="submit">
+              <FontAwesomeIcon icon={faSearch} />
+            </SearchButton>
+          </form>
         </Column>
         <Column>
           {isLoggedIn ? (
