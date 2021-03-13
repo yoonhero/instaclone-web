@@ -13,6 +13,8 @@ import Layout from "./components/Layout";
 import Profile from "./screens/Profile";
 import EditProfile from "./screens/EditProfile";
 import SearchUsers from "./screens/SearchUsers";
+import Explore from "./screens/Explore";
+import UploadPhoto from "./screens/UploadPhoto";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
@@ -38,6 +40,7 @@ function App() {
                   <SignUp />
                 </Route>
               ) : null}
+
               <Route path={`/users/:username`}>
                 <Layout>
                   <Profile />
@@ -51,6 +54,16 @@ function App() {
               <Route path={`/search/:keyword/`}>
                 <Layout>
                   <SearchUsers />
+                </Layout>
+              </Route>
+              <Route path={"/explore"}>
+                <Layout>
+                  <Explore />
+                </Layout>
+              </Route>
+              <Route path={"/upload"}>
+                <Layout>
+                  <UploadPhoto />
                 </Layout>
               </Route>
               <Route>

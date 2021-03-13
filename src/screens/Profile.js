@@ -127,8 +127,9 @@ const ProfileBtn = styled(Button).attrs({
   as: "span",
 })`
   padding: 8px 4px;
+  margin: 0;
   margin-left: 10px;
-  margin-top: 10px;
+
   cursor: pointer;
 `;
 
@@ -222,33 +223,41 @@ const Profile = () => {
       />
       <div>
         <Header>
-          <Avatar src={data?.seeProfile?.avatar}></Avatar>
-          <Column>
-            <Row>
-              <Username>{data?.seeProfile?.username}</Username>
-              {data?.seeProfile ? getButton(data.seeProfile) : null}
-            </Row>
-            <Row>
-              <List>
-                <Item>
-                  <span>
-                    <Value>{data?.seeProfile?.totalFollowers}</Value> followers
-                  </span>
-                </Item>
-                <Item>
-                  <span>
-                    <Value>{data?.seeProfile?.totalFollowing}</Value> following
-                  </span>
-                </Item>
-              </List>
-            </Row>
-            <Row>
-              <Name>
-                {data?.seeProfile?.firstName} {data?.seeProfile?.lastName}
-              </Name>
-            </Row>
-            <Row>{data?.seeProfile?.bio}</Row>
-          </Column>
+          {data?.seeProfile ? (
+            <>
+              <Avatar src={data?.seeProfile?.avatar}></Avatar>
+              <Column>
+                <Row>
+                  <Username>{data?.seeProfile?.username}</Username>
+                  {data?.seeProfile ? getButton(data.seeProfile) : null}
+                </Row>
+                <Row>
+                  <List>
+                    <Item>
+                      <span>
+                        <Value>{data?.seeProfile?.totalFollowers}</Value>{" "}
+                        followers
+                      </span>
+                    </Item>
+                    <Item>
+                      <span>
+                        <Value>{data?.seeProfile?.totalFollowing}</Value>{" "}
+                        following
+                      </span>
+                    </Item>
+                  </List>
+                </Row>
+                <Row>
+                  <Name>
+                    {data?.seeProfile?.firstName} {data?.seeProfile?.lastName}
+                  </Name>
+                </Row>
+                <Row>{data?.seeProfile?.bio}</Row>
+              </Column>
+            </>
+          ) : (
+            <PageTitle title={"User not Found"} />
+          )}
         </Header>
         <Grid>
           {data?.seeProfile?.photos.map((photo) => (

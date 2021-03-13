@@ -10,6 +10,7 @@ import FormBox from "../components/auth/FormBox";
 import AuthLayout from "../components/auth/AuthLayout";
 
 import { useState } from "react";
+import { logUserOut } from "../apollo";
 
 const ME_QUERY = gql`
   query me {
@@ -82,6 +83,14 @@ const SubmitButton = styled(Button)`
   margin-top: 4rem;
   width: 40%;
 `;
+const LogOuButton = styled(Button)`
+  margin-top: 1rem;
+  width: 40%;
+  background: tomato;
+  &:hover {
+    background: red;
+  }
+`;
 const Title = styled.h1`
   font-size: 30px;
   margin-bottom: 30px;
@@ -96,8 +105,8 @@ const EditAvatar = styled.div`
   position: relative;
   margin-bottom: 30px;
   label div img {
-    height: 100%;
-    width: 100%;
+    height: 100px;
+    width: 100px;
     border-radius: 50%;
   }
   label span {
@@ -172,9 +181,11 @@ const EditProfile = () => {
       const {
         currentTarget: { result },
       } = finishedEvent;
+      console.log(result);
       setAvatarUrl(result);
     };
     reader.readAsDataURL(theFile);
+    console.log(theFile);
   };
   return (
     <>
@@ -271,6 +282,7 @@ const EditProfile = () => {
               type="submit"
               value={loading ? "Loading..." : "Submit"}
             />
+            <LogOuButton type="submit" value="SignOut" onClick={logUserOut} />
           </Form>
         </EditProfileContainer>
       ) : (

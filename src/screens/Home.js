@@ -6,7 +6,7 @@ import { LoadingSpinner } from "../components/LoadingSpinner";
 import PageTitle from "../components/PageTitle";
 import { PHOTO_FRAGMENT, COMMENT_FRAGMENT } from "../fragments";
 
-const FEED_QUERY = gql`
+export const FEED_QUERY = gql`
   query seeFeed {
     seeFeed {
       ...PhotoFragment

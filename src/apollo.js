@@ -6,6 +6,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { createUploadLink } from "apollo-upload-client";
+import { useHistory } from "react-router";
 const TOKEN = "token";
 const DARK_MODE = "DARK_MODE";
 
@@ -19,6 +20,7 @@ export const logUserIn = (token) => {
 export const logUserOut = () => {
   localStorage.removeItem(TOKEN);
   window.location.reload();
+  window.location.href = "/";
 };
 
 export const darkModeVar = makeVar(Boolean(localStorage.getItem(DARK_MODE)));

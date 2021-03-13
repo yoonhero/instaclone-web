@@ -71,6 +71,10 @@ const SearchButton = styled(Button)`
   }
 `;
 
+const FileInput = styled.input`
+  display: none;
+`;
+
 export const Header = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
   const { data } = useUser();
@@ -86,11 +90,31 @@ export const Header = () => {
     history.push(`/search/${search}`);
   };
 
+  const onSubmitImg = async () => {
+    const { image } = getValues();
+    if (!image) {
+      return;
+    }
+    history.push("/upload", {
+      image: image[0],
+    });
+  };
+
   return (
     <SHeader>
       <Wrapper>
         <Column>
-          <FontAwesomeIcon icon={faInstagram} size="2x" />
+          <FileInput
+            ref={register({})}
+            name="image"
+            id="uploadFile"
+            type="file"
+            accept="image/*"
+            onChange={onSubmitImg}
+          />
+          <label for="uploadFile">
+            <FontAwesomeIcon icon={faInstagram} size="2x" />
+          </label>
         </Column>
         <Column>
           <form onSubmit={handleSubmit(onSubmitValid)}>
@@ -115,7 +139,9 @@ export const Header = () => {
                 </Link>
               </Icon>
               <Icon>
-                <FontAwesomeIcon icon={faCompass} size="lg" />
+                <Link to={"explore"}>
+                  <FontAwesomeIcon icon={faCompass} size="lg" />
+                </Link>
               </Icon>
               <Icon>
                 <Link to={`/users/${data?.me?.username}`}>
@@ -128,7 +154,7 @@ export const Header = () => {
               </Icon>
             </IconsContainer>
           ) : (
-            <Link href={routes.home}>
+            <Link to={routes.home}>
               <Button>Login</Button>
             </Link>
           )}
