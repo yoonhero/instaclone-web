@@ -36,7 +36,10 @@ export const disabledDarkMode = () => {
 };
 
 const httpLink = createUploadLink({
-  uri: "http://localhost:4000/graphql",
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "https://instaclone-backend-yoonhero.herokuapp.com/graphql"
+      : "http://localhost:4000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
