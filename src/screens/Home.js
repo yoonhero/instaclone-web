@@ -58,7 +58,6 @@ const Home = () => {
     const clientHeight = document.documentElement.clientHeight;
     if (scrollTop + clientHeight >= scrollHeight && fetching === false) {
       // 페이지 끝에 도달하면 추가 데이터를 받아온다
-      console.log("Reach");
       fetchMoreInstaFeeds();
     }
   };
