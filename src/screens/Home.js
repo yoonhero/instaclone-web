@@ -31,7 +31,6 @@ export const FEED_QUERY = gql`
 
 const Home = () => {
   const [fetching, setFetching] = useState(false); // 추가 데이터를 로드하는지 아닌지를 담기위한 state
-  const [allData, setAllData] = useState([]);
   const { data, loading, fetchMore } = useQuery(FEED_QUERY, {
     variables: {
       offset: 0,
@@ -41,24 +40,13 @@ const Home = () => {
 
   const fetchMoreInstaFeeds = async () => {
     setFetching(true);
-    let offset = 0;
-    if (allData.length === 0) {
-      offset = Math.floor(data?.seeFeed?.length);
-    } else {
-      offset =
-        Math.floor(data?.seeFeed?.length) +
-        Math.floor(allData?.seeFeed?.length);
-    }
     if (data !== null && data !== undefined) {
-      let { data: newData } = await fetchMore({
+      fetchMore({
         variables: {
-          offset,
+          offset: Math.floor(data?.seeFeed?.length),
           limit: 2,
         },
       });
-      console.log(newData);
-      newData?.seeFeed.concat(allData?.data?.seeFeed);
-      setAllData(newData.data);
     }
 
     setFetching(false);
@@ -87,9 +75,6 @@ const Home = () => {
       ) : (
         data?.seeFeed?.map((photo) => <Photo key={photo.id} {...photo} />)
       )}
-      {allData !== null
-        ? allData?.seeFeed?.map((photo) => <Photo key={photo.id} {...photo} />)
-        : null}
     </div>
   );
 };
